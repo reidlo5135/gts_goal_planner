@@ -1,0 +1,2 @@
+int8 succedeed_goal_count
+int8 list_count
