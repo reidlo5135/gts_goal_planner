@@ -13,6 +13,8 @@ include_directories(
 find_package(ament_cmake REQUIRED)
 find_package(rcl REQUIRED)
 find_package(rclc REQUIRED)
+find_package(actionlib_msgs REQUIRED)
+find_package(nav2_msgs REQUIRED)
 find_package(gts_msgs REQUIRED)
 
 set(source_sets
