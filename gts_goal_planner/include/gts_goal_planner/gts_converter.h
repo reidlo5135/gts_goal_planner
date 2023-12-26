@@ -15,13 +15,14 @@
 
 #define RCL_NODE_NAME "gts_goal_planner"
 
+#define WT_SLAM 1
+#define WT_GPS 2
+
 typedef struct _Position
 {
     double x;
     double y;
 } Position;
-
-struct Position PositionArr[];
 
 typedef struct _MapInfo
 {
@@ -32,11 +33,16 @@ typedef struct _MapInfo
 
 typedef enum _WorkType
 {
-    SLAM,
-    GPS
+    SLAM = WT_SLAM,
+    GPS = WT_GPS
 } WorkType;
 
-void initialize(
+extern MapInfo map_info_;
+extern Position area_offeset_;
+extern Position lon_lat_LB_;
+extern Position lon_lat_RT_;
+
+void converter_initialize(
     int x1, int y1,
     int x2, int y2,
     int slam_width, int slam_height,
@@ -50,7 +56,7 @@ void init_area(
 
 Position convert_gps_to_slam(double longitude, double latitude);
 Position convert_slam_to_gps(int x, int y);
-Position convert_slam_pos(int x, int y, WorkType type);
+Position *convert_slam_pos(int x, int y, WorkType type);
 Position *convert_slam_virtual_map_area(
     int x1, int y1,
     int x2, int y2,

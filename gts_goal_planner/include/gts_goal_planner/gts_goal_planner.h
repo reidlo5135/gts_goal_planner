@@ -17,6 +17,8 @@
 #include <sensor_msgs/msg/nav_sat_fix.h>
 #include <action_msgs/msg/goal_status.h>
 
+#include "gts_goal_planner/gts_converter.h"
+
 #define RCCHECK(fn)                                                                                      \
     {                                                                                                    \
         rcl_ret_t temp_rc = fn;                                                                          \

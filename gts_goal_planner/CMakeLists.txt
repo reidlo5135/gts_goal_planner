@@ -38,6 +38,10 @@ ament_target_dependencies(${executable_name}
   ${dependencies}
 )
 
+target_link_libraries(${executable_name}
+  m
+)
+
 install(TARGETS ${executable_name}
   DESTINATION lib/${PROJECT_NAME}
 )
