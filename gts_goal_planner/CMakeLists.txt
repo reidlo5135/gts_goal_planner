@@ -11,15 +11,15 @@ include_directories(
 )
 
 find_package(ament_cmake REQUIRED)
-find_package(rcl REQUIRED)
-find_package(rclc REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
 find_package(actionlib_msgs REQUIRED)
 find_package(nav2_msgs REQUIRED)
 find_package(gts_msgs REQUIRED)
 
 set(source_sets
-  src/gts_converter.c
-  src/gts_goal_planner.c
+  src/gts_converter.cxx
+  src/gts_goal_planner.cxx
 )
 
 set(executable_name gts_goal_planner)
@@ -29,8 +29,9 @@ add_executable(${executable_name}
 )
 
 set(dependencies
-  rcl
-  rclc
+  rclcpp
+  rclcpp_action
+  nav2_msgs
   gts_msgs
 )
 
