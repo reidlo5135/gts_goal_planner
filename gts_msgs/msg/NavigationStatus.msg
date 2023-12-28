@@ -1,2 +1,0 @@
-int8 current_goal_index
-int8 status_code

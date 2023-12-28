@@ -86,7 +86,7 @@ std::shared_ptr<gts_goal_planner::position::Point> gts_goal_planner::converter::
 
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] convert_gps_to_slam type : [%d]", CLASS_NAME, gts_goal_planner::position::WorkType::GPS);
 
-    std::shared_ptr<gts_goal_planner::position::Point> s_point = convert_slam_pos((int)m_x, (int)m_y, gts_goal_planner::position::WorkType::GPS);
+    std::shared_ptr<gts_goal_planner::position::Point> s_point = convert_slam_pos(static_cast<int>(m_x), static_cast<int>(m_y), gts_goal_planner::position::WorkType::GPS);
 
     if (s_point == nullptr)
     {

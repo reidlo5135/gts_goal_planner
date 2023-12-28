@@ -1,6 +1,57 @@
 #include "gts_goal_planner/gts_goal_planner.hxx"
 
-int main(int argc, const char *const *argv)
+gts_goal_planner::planner::GoalPlanner::GoalPlanner(const rclcpp::NodeOptions &node_options = rclcpp::NodeOptions())
+    : Node(RCL_NODE_NAME, node_options)
+{
+    this->node_ = std::shared_ptr<rclcpp::Node>(this, [](rclcpp::Node *) {});
+
+    if (this->node_ != nullptr)
+    {
+        RCLCPP_INFO(this->node_->get_logger(), "[%s] node has been created", RCL_NODE_NAME);
+    }
+    else
+    {
+        RCUTILS_LOG_ERROR_NAMED(RCL_NODE_NAME, "failed to create %s node", RCL_NODE_NAME);
+        exit(0);
+    }
+
+    this->gts_goal_planner_server_cb_group_ = this->node_->create_callback_group(rclcpp::CallbackGroupType::MutuallyExclusive);
+    this->gts_goal_planner_server_ = rclcpp_action::create_server<gts_msgs::action::GoalPlanner>(
+        this->node_,
+        ACTION_SERVER_NAME,
+        std::bind(&gts_goal_planner::planner::GoalPlanner::handle_goal, this, _1, _2),
+        std::bind(&gts_goal_planner::planner::GoalPlanner::handle_cancel, this, _1),
+        std::bind(&gts_goal_planner::planner::GoalPlanner::handle_accepted, this, _1),
+        rcl_action_server_get_default_options(),
+        this->gts_goal_planner_server_cb_group_);
+}
+
+gts_goal_planner::planner::GoalPlanner::~GoalPlanner()
+{
+
+}
+
+rclcpp_action::GoalResponse gts_goal_planner::planner::GoalPlanner::handle_goal(const rclcpp_action::GoalUUID &uuid, std::shared_ptr<const gts_msgs::action::GoalPlanner::Goal> goal)
+{
+
+}
+
+rclcpp_action::CancelResponse gts_goal_planner::planner::GoalPlanner::handle_cancel(const std::shared_ptr<rclcpp_action::ServerGoalHandle<gts_msgs::action::GoalPlanner>> goal_handle)
+{
+
+}
+
+void gts_goal_planner::planner::GoalPlanner::handle_accepted(const std::shared_ptr<rclcpp_action::ServerGoalHandle<gts_msgs::action::GoalPlanner>> goal_handle)
+{
+
+}
+
+void gts_goal_planner::planner::GoalPlanner::execute(const std::shared_ptr<rclcpp_action::ServerGoalHandle<gts_msgs::action::GoalPlanner>> goal_handle)
+{
+
+}
+
+void gts_goal_planner::planner::GoalPlanner::position_test()
 {
     gts_goal_planner::position::Point test_pos_1 = gts_goal_planner::position::Point();
     test_pos_1.set__x(0.0);
@@ -75,36 +126,51 @@ int main(int argc, const char *const *argv)
     std::shared_ptr<gts_goal_planner::position::Point> gps_pos_test_1 = converter->convert_slam_to_gps(test_pos_1.get__x(), test_pos_1.get__y());
     std::shared_ptr<gts_goal_planner::position::Point> slam_pos_test_1 = converter->convert_gps_to_slam(gps_pos_test_1->get__x(), gps_pos_test_1->get__y());
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] GPS : [%f, %f]", CLASS_NAME, gps_pos_test_1->get__x(), gps_pos_test_1->get__y());
-    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_1->get__x() , slam_pos_test_1->get__y());
+    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_1->get__x(), slam_pos_test_1->get__y());
+    printf("============================\n\n");
 
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] [2]", CLASS_NAME);
     std::shared_ptr<gts_goal_planner::position::Point> gps_pos_test_2 = converter->convert_slam_to_gps(test_pos_2.get__x(), test_pos_2.get__y());
     std::shared_ptr<gts_goal_planner::position::Point> slam_pos_test_2 = converter->convert_gps_to_slam(gps_pos_test_2->get__x(), gps_pos_test_2->get__y());
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] GPS : [%f, %f]", CLASS_NAME, gps_pos_test_2->get__x(), gps_pos_test_2->get__y());
-    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_2->get__x() , slam_pos_test_2->get__y());
+    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_2->get__x(), slam_pos_test_2->get__y());
+    printf("============================\n\n");
 
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] [3]", CLASS_NAME);
     std::shared_ptr<gts_goal_planner::position::Point> gps_pos_test_3 = converter->convert_slam_to_gps(test_pos_3.get__x(), test_pos_3.get__y());
     std::shared_ptr<gts_goal_planner::position::Point> slam_pos_test_3 = converter->convert_gps_to_slam(gps_pos_test_3->get__x(), gps_pos_test_3->get__y());
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] GPS : [%f, %f]", CLASS_NAME, gps_pos_test_3->get__x(), gps_pos_test_3->get__y());
-    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_3->get__x() , slam_pos_test_3->get__y());
+    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_3->get__x(), slam_pos_test_3->get__y());
+    printf("============================\n\n");
 
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] [4]", CLASS_NAME);
     std::shared_ptr<gts_goal_planner::position::Point> gps_pos_test_4 = converter->convert_slam_to_gps(test_pos_4.get__x(), test_pos_4.get__y());
     std::shared_ptr<gts_goal_planner::position::Point> slam_pos_test_4 = converter->convert_gps_to_slam(gps_pos_test_4->get__x(), gps_pos_test_4->get__y());
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] GPS : [%f, %f]", CLASS_NAME, gps_pos_test_4->get__x(), gps_pos_test_4->get__y());
-    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_4->get__x() , slam_pos_test_4->get__y());
+    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_4->get__x(), slam_pos_test_4->get__y());
+    printf("============================\n\n");
 
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] [5]", CLASS_NAME);
     std::shared_ptr<gts_goal_planner::position::Point> gps_pos_test_5 = converter->convert_slam_to_gps(test_pos_5.get__x(), test_pos_5.get__y());
     std::shared_ptr<gts_goal_planner::position::Point> slam_pos_test_5 = converter->convert_gps_to_slam(gps_pos_test_5->get__x(), gps_pos_test_5->get__y());
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] GPS : [%f, %f]", CLASS_NAME, gps_pos_test_5->get__x(), gps_pos_test_5->get__y());
-    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_5->get__x() , slam_pos_test_5->get__y());
+    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_5->get__x(), slam_pos_test_5->get__y());
+    printf("============================\n\n");
 
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] [6]", CLASS_NAME);
     std::shared_ptr<gts_goal_planner::position::Point> gps_pos_test_6 = converter->convert_slam_to_gps(test_pos_6.get__x(), test_pos_6.get__y());
     std::shared_ptr<gts_goal_planner::position::Point> slam_pos_test_6 = converter->convert_gps_to_slam(gps_pos_test_6->get__x(), gps_pos_test_6->get__y());
     RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] GPS : [%f, %f]", CLASS_NAME, gps_pos_test_6->get__x(), gps_pos_test_6->get__y());
-    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_6->get__x() , slam_pos_test_6->get__y());
+    RCUTILS_LOG_INFO_NAMED(RCL_NODE_NAME, "[%s] SLAM : [%f, %f]", CLASS_NAME, slam_pos_test_6->get__x(), slam_pos_test_6->get__y());
+}
+
+int main(int argc, const char *const *argv)
+{
+    rclcpp::init(argc, argv);
+    rclcpp::Node::SharedPtr node = std::make_shared<gts_goal_planner::planner::GoalPlanner>();
+    rclcpp::executors::MultiThreadedExecutor multi_threaded_executor;
+    multi_threaded_executor.add_node(node);
+    multi_threaded_executor.spin();
+    rclcpp::shutdown();
     return 0;
 }

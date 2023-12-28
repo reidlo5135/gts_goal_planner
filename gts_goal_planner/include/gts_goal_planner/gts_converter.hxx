@@ -40,6 +40,7 @@ namespace gts_goal_planner
             {
                 this->x_ = x;
             }
+            
             double get__y()
             {
                 return this->y_;
@@ -69,6 +70,7 @@ namespace gts_goal_planner
             {
                 this->mapping_map_width_ = mapping_map_width;
             }
+
             double get__mapping_map_height()
             {
                 return this->mapping_map_height_;
@@ -77,6 +79,7 @@ namespace gts_goal_planner
             {
                 this->mapping_map_height_ = mapping_map_height;
             }
+
             double get__slam_rotation_angle()
             {
                 return this->slam_rotation_angle_;
@@ -107,6 +110,7 @@ namespace gts_goal_planner
         public:
             explicit Converter();
             virtual ~Converter();
+
             void initialize(
                 int x1, int y1,
                 int x2, int y2,
@@ -122,12 +126,14 @@ namespace gts_goal_planner
             std::shared_ptr<gts_goal_planner::position::Point> convert_gps_to_slam(double longitude, double latitude);
             std::shared_ptr<gts_goal_planner::position::Point> convert_slam_to_gps(int x, int y);
             std::shared_ptr<gts_goal_planner::position::Point> convert_slam_pos(int x, int y, gts_goal_planner::position::WorkType type);
+
             std::vector<gts_goal_planner::position::Point> convert_slam_virtual_map_area(
                 int x1, int y1,
                 int x2, int y2,
                 int width, int height,
                 gts_goal_planner::position::Point map_point_1, gts_goal_planner::position::Point map_point_2,
                 gts_goal_planner::position::Point start_lon_lat, gts_goal_planner::position::Point end_lon_lat);
+
             gts_goal_planner::position::Point get_moving_lon_lat(double lon, double lat, double distance, double radian);
             double get_angle(double lon1, double lat1, double lon2, double lat2);
             double get_distance_in_meter(double lat1, double lon1, double lat2, double lon2);

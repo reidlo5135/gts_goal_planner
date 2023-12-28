@@ -1,0 +1,14 @@
+# goal definition
+sensor_msgs/NavSatFix[] gps_goal_list
+
+---
+
+# result definition
+int8 succedeed_goal_count
+int8 list_count
+
+---
+
+# feedback definition
+int8 current_goal_index
+int8 status_code
