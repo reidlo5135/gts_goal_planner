@@ -13,9 +13,12 @@ include_directories(
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(actionlib_msgs REQUIRED)
 find_package(nav2_msgs REQUIRED)
 find_package(gts_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 set(source_sets
   src/gts_converter.cxx
@@ -31,8 +34,12 @@ add_executable(${executable_name}
 set(dependencies
   rclcpp
   rclcpp_action
+  std_msgs
+  actionlib_msgs
   nav2_msgs
   gts_msgs
+  geometry_msgs
+  sensor_msgs
 )
 
 ament_target_dependencies(${executable_name}
